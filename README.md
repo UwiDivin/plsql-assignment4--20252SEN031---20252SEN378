@@ -12,8 +12,8 @@ This project was developed as part of **Database Development with PL/SQL (INSY 8
 
 | Name | Student ID |
 |---|---|
-| Student 1: [UWINGENEYE DIVIN] | [20252SEN378] |
-| Student 2: [BIZIMANA CREDO] | [20252SEN031] |
+| Student 1: UWINGENEYE DIVIN | 20252SEN378 |
+| Student 2: BIZIMANA CREDO | 20252SEN031 |
 
 ## 3. Technologies Used
 
