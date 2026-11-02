@@ -1,30 +1,22 @@
-CREATE OR REPLACE PROCEDURE list_low_stock AS
-    CURSOR c_low_stock IS
-        SELECT product_id, product_name, quantity_in_stock, reorder_level
+CREATE OR REPLACE PROCEDURE list_low_stock
+IS
+    CURSOR c IS
+        SELECT product_name, quantity_in_stock
         FROM products
-        WHERE quantity_in_stock <= reorder_level
-        ORDER BY product_name;
+        WHERE quantity_in_stock <= reorder_level;
 
-    v_item c_low_stock%ROWTYPE;
+    v_name products.product_name%TYPE;
+    v_qty  products.quantity_in_stock%TYPE;
 BEGIN
-    OPEN c_low_stock;
-    LOOP
-        FETCH c_low_stock INTO v_item;
-        EXIT WHEN c_low_stock%NOTFOUND;
+    OPEN c;
 
-        DBMS_OUTPUT.PUT_LINE(
-            'ID: ' || v_item.product_id ||
-            ' | Product: ' || v_item.product_name ||
-            ' | Stock: ' || v_item.quantity_in_stock ||
-            ' | Reorder level: ' || v_item.reorder_level
-        );
+    LOOP
+        FETCH c INTO v_name, v_qty;
+        EXIT WHEN c%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE(v_name || ': ' || v_qty);
     END LOOP;
-    CLOSE c_low_stock;
-EXCEPTION
-    WHEN OTHERS THEN
-        IF c_low_stock%ISOPEN THEN
-            CLOSE c_low_stock;
-        END IF;
-        RAISE;
-END list_low_stock;
+
+    CLOSE c;
+END;
 /
